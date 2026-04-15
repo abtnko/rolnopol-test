@@ -1,4 +1,5 @@
 import type { Page } from "@playwright/test";
+import { env } from "../utils/env";
 import { apiUrls } from "../utils/page-urls";
 
 export class CommonMock {
@@ -21,7 +22,7 @@ export class CommonMock {
 
   async getFeatureFlags(): Promise<void> {
     this.registerMock(`GET ${apiUrls.featureFlags}`);
-    await this.page.route(`**${apiUrls.featureFlags}`, (route) => {
+    await this.page.route(`${env.BASE_URL}${apiUrls.featureFlags}`, (route) => {
       this.useMock(`GET ${apiUrls.featureFlags}`);
       return route.fulfill({
         status: 200,
@@ -42,7 +43,7 @@ export class CommonMock {
 
   async getVersion(): Promise<void> {
     this.registerMock(`GET ${apiUrls.version}`);
-    await this.page.route(`**${apiUrls.version}`, (route) => {
+    await this.page.route(`${env.BASE_URL}${apiUrls.version}`, (route) => {
       this.useMock(`GET ${apiUrls.version}`);
       return route.fulfill({
         status: 200,

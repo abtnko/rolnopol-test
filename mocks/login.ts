@@ -1,4 +1,5 @@
 import type { Page } from "@playwright/test";
+import { env } from "../utils/env";
 import { apiUrls } from "../utils/page-urls";
 
 export class LoginMock {
@@ -21,7 +22,7 @@ export class LoginMock {
 
   async loginFailed(): Promise<void> {
     this.registerMock(`POST ${apiUrls.login}`);
-    await this.page.route(`**${apiUrls.login}`, (route) => {
+    await this.page.route(`${env.BASE_URL}${apiUrls.login}`, (route) => {
       this.useMock(`POST ${apiUrls.login}`);
       return route.fulfill({
         status: 401,
