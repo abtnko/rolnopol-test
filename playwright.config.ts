@@ -1,19 +1,18 @@
 import { defineConfig, devices } from '@playwright/test';
-import dotenv from 'dotenv';
-import path from 'path';
-
-// Load environment variables from .env file
-dotenv.config({ path: path.resolve(import.meta.dirname, '.env') });
+import { env } from './utils/env';
 
 export default defineConfig({
   testDir: './tests',
+  timeout: 10 * 1000,
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
-  ...(process.env.CI ? { workers: 1 } : {}),
-  reporter: 'html',
+  ...(process.env.CI ? { workers: 2 } : {}),
+  reporter: process.env.CI
+    ? [["github"], ["html"]]
+    : [["html", { open: "never" }]],
   use: {
-    baseURL: 'http://localhost:3000',
+    baseURL: env.BASE_URL,
     trace: 'on',
   },
 
