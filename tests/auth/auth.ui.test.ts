@@ -7,8 +7,8 @@ test.describe("Authentication UI tests", () => {
 		await commonMock.getVersion();
 		await loginMock.loginFailed();
         
+        // Attempt login with invalid credentials
 		await loginPage.goto();
-
 		await loginPage.login("wrong@test.com", "wrongpass");
 
         // User should remain on login page and see error toast message
