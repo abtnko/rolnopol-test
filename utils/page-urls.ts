@@ -6,5 +6,8 @@ export const pageUrls = {
 
 export const apiUrls = {
   login: "/api/v1/login",
+  authorization: "/api/v1/authorization",
+  featureFlags: "/api/v1/feature-flags",
+  version: "/api/version",
 } as const;
 

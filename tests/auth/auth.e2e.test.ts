@@ -20,7 +20,9 @@ test.describe("Authentication E2E tests", () => {
 		await expect(page).toHaveURL(pageUrls.profile);
 
 		// Verify the user is logged in and account is active
-		await profilePage.expectUserDetails(displayName, email);
+		const userDetails = await profilePage.getUserDetails();
+		expect(userDetails.displayName).toBe(displayName);
+		expect(userDetails.email).toBe(email);
 		await expect(page.locator("#statusText")).toHaveText("Active");
 	});
 });
