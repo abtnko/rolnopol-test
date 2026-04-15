@@ -1,4 +1,5 @@
 import { expect, test } from "../../utils/fixtures";
+import { env } from "../../utils/env";
 import { pageUrls } from "../../utils/page-urls";
 
 test.describe("Authentication E2E tests", () => {
@@ -24,5 +25,18 @@ test.describe("Authentication E2E tests", () => {
 		expect(userDetails.displayName).toBe(displayName);
 		expect(userDetails.email).toBe(email);
 		await expect(page.locator("#statusText")).toHaveText("Active");
+	});
+
+	test("User logs out successfully", { tag: ["@e2e", "@auth", "@happy-path"] }, async ({ helpers, profilePage, page }) => {
+		// Log in via API and inject session cookies into the browser
+		await helpers.apiLogin(env.DEMO_USER_EMAIL, env.DEMO_USER_PASSWORD);
+
+		// Navigate directly to profile page
+		await profilePage.goto();
+		await expect(page).toHaveURL(pageUrls.profile);
+
+		// Logout and verify redirect to home page
+		await profilePage.logout();
+		await expect(page).toHaveURL("/");
 	});
 });

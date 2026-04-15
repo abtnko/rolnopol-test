@@ -4,6 +4,7 @@ import { ProfilePage } from "../pages/profile.page";
 import { RegisterPage } from "../pages/register.page";
 import { CommonMock } from "../mocks/common";
 import { LoginMock } from "../mocks/login";
+import { Helpers } from "./helpers";
 
 type Fixtures = {
   // Pages
@@ -14,6 +15,9 @@ type Fixtures = {
   // API Mocks
   commonMock: CommonMock;
   loginMock: LoginMock;
+
+  // Helpers
+  helpers: Helpers;
 };
 
 export const test = base.extend<Fixtures>({
@@ -30,6 +34,7 @@ export const test = base.extend<Fixtures>({
     await use(mock);
     checkUnusedMocks(mock);
   },
+  helpers: async ({ request, context }, use) => { await use(new Helpers(request, context)); },
 });
 
 export { expect } from "@playwright/test";

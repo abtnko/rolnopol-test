@@ -12,7 +12,7 @@ This project contains automated tests for the rolnopol web app. Tests are writte
 tests/         # Test files, organized by domain
 pages/         # Page object models
 mocks/         # API mock object models
-utils/         # Fixtures, environment config, URL constants
+utils/         # Fixtures, environment config, URL constants, helpers
 ```
 
 ## Test types
@@ -76,6 +76,7 @@ npm run test:report
 ## Conventions
 
 - Page objects in `pages/` encapsulate selectors and actions. Assertions stay in tests. Pages are accessed in tests via fixtures defined in `utils/fixtures.ts`.
+- `utils/helpers.ts` contains reusable test actions. For example, `apiLogin` calls the login API and sets session cookies in the browser. Access it in tests via the `helpers` fixture: `helpers.apiLogin(...)`.
 - Mocks are set up per-test via fixtures (`commonMock`, `loginMock`, etc.). Every mock registered in a test should be consumed — unused mocks are checked via fixture teardown after each test and will cause a test failure, so only set up mocks that the test actually triggers.
 - All environment-specific values are read from `.env` via `utils/env.ts`. In CI, provide these as environment secrets or variables instead of a `.env` file.
 - Tests are tagged with `@domain` (e.g. `@auth`) and `@type` (e.g. `@e2e`, `@api`, `@ui`) and scenario (`@happy-path`, `@negative`).
