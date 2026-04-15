@@ -1,8 +1,8 @@
 import { expect, test } from "../../utils/fixtures";
 import { pageUrls } from "../../utils/page-urls";
 
-test.describe("Authentication", () => {
-	test("User registers a new account and logs in successfully", async ({ registerPage, loginPage, profilePage, page }) => {
+test.describe("Authentication E2E tests", () => {
+	test("User registers a new account and logs in successfully", { tag: ["@e2e", "@auth", "@happy-path"] }, async ({ registerPage, loginPage, profilePage, page }) => {
 		const timestamp = Date.now();
 		const email = `testuser_${timestamp}@test.com`;
 		const displayName = `User ${timestamp}`;

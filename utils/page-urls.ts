@@ -4,3 +4,7 @@ export const pageUrls = {
   profile: "/profile.html",
 } as const;
 
+export const apiUrls = {
+  login: "/api/v1/login",
+} as const;
+
