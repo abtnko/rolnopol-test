@@ -3,7 +3,7 @@ import { env } from "../../utils/env";
 import { apiUrls } from "../../utils/page-urls";
 
 test.describe("Authentication API tests", () => {
-	test("User logs in successfully with valid credentials", { tag: ["@api", "@auth", "@happy-path"] }, async ({ request }) => {
+	test("Login endpoint returns expected payload for valid credentials", { tag: ["@api", "@auth", "@happy-path"] }, async ({ request }) => {
 		const response = await request.post(apiUrls.login, {
 			data: {
 				email: env.DEMO_USER_EMAIL,
@@ -31,7 +31,7 @@ test.describe("Authentication API tests", () => {
 		expect.soft(body.data.user.lastLogin).toBeTruthy();
 	});
 
-	test("Login fails with invalid password", { tag: ["@api", "@auth", "@negative"] }, async ({ request }) => {
+	test("Login endpoint rejects invalid password", { tag: ["@api", "@auth", "@negative"] }, async ({ request }) => {
 		const response = await request.post(apiUrls.login, {
 			data: {
 				email: env.DEMO_USER_EMAIL,
