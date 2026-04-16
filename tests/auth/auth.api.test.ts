@@ -15,8 +15,8 @@ test.describe("Authentication API tests", () => {
 		expect(response.headers()["content-type"]).toContain("application/json");
 		const body = await response.json();
 
-		expect(body).toHaveProperty("success", true);
-		expect(body).toHaveProperty("message", "Login successful");
+		expect(body.success).toBe(true);
+		expect(body.message).toBe("Login successful");
 		helpers.expectIsoDateString(body.timestamp);
 		expect(body.data).toBeDefined();
 
