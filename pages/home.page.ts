@@ -11,7 +11,7 @@ export class HomePage extends BasePage {
     this.registerNavLink = this.page.getByTestId("nav-register");
   }
 
-  async clickOnNavLink() {
+  async clickOnRegisterNavLink() {
     await this.registerNavLink.click();
   }
 }

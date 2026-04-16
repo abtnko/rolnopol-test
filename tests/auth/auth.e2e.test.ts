@@ -11,7 +11,7 @@ test.describe("Authentication E2E tests", () => {
 
 		// Register new account
 		await homePage.goto();
-		await homePage.clickOnNavLink();
+		await homePage.clickOnRegisterNavLink();
 		await registerPage.register(email, displayName, password);
 
 		// Registration redirects to login page
