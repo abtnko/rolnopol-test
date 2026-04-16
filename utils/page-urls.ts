@@ -1,4 +1,5 @@
 export const pageUrls = {
+  home: "/",
   login: "/login.html",
   register: "/register.html",
   profile: "/profile.html",

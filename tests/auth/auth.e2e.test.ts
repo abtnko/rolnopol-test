@@ -3,14 +3,15 @@ import { env } from "../../utils/env";
 import { pageUrls } from "../../utils/page-urls";
 
 test.describe("Authentication E2E tests", () => {
-	test("User registers a new account and logs in successfully", { tag: ["@e2e", "@auth", "@happy-path"] }, async ({ registerPage, loginPage, profilePage, page }) => {
+	test("User registers a new account and logs in successfully", { tag: ["@e2e", "@smoke", "@auth", "@happy-path"] }, async ({ homePage, registerPage, loginPage, profilePage, page }) => {
 		const timestamp = Date.now();
 		const email = `testuser_${timestamp}@test.com`;
 		const displayName = `User ${timestamp}`;
 		const password = "Pass123";
 
 		// Register new account
-		await registerPage.goto();
+		await homePage.goto();
+		await homePage.clickOnNavLink();
 		await registerPage.register(email, displayName, password);
 
 		// Registration redirects to login page
