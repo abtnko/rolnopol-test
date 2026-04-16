@@ -21,6 +21,11 @@ test.describe("Authentication E2E tests", () => {
 		await loginPage.login(email, password);
 		await expect(page).toHaveURL(pageUrls.profile);
 
+		// Verify session cookies are set after successful login
+		const cookies = await page.context().cookies();
+		expect(cookies.find((c) => c.name === "rolnopolToken")?.value).toBeTruthy();
+		expect(cookies.find((c) => c.name === "rolnopolIsLogged")?.value).toBe("true");
+
 		// Verify the user is logged in and account is active
 		const userDetails = await profilePage.getUserDetails();
 		expect(userDetails.displayName).toBe(displayName);
@@ -38,6 +43,15 @@ test.describe("Authentication E2E tests", () => {
 
 		// Logout and verify redirect to home page
 		await profilePage.logout();
-		await expect(page).toHaveURL("/");
+		await expect(page).toHaveURL(pageUrls.home);
+
+		// Verify session cookies are cleared
+		const cookies = await page.context().cookies();
+		expect(cookies.find((c) => c.name === "rolnopolToken")).toBeUndefined();
+		expect(cookies.find((c) => c.name === "rolnopolIsLogged")).toBeUndefined();
+
+		// Verify that accessing profile without a session redirects to login
+		await profilePage.goto();
+		await expect(page).toHaveURL(pageUrls.login);
 	});
 });
