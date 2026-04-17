@@ -96,6 +96,7 @@ npm run test:report
 - `utils/helpers.ts` contains reusable test actions. For example, `apiLogin` calls the login API and sets session cookies in the browser. Access it in tests via the `helpers` fixture: `helpers.apiLogin(...)`.
 - Mocks are set up per-test via fixtures (`commonMock`, `loginMock`, etc.). Set up only mocks that the test actually uses. Unused mocks are detected during fixture teardown and fail the test.
 - All environment-specific values are read from `.env` via `utils/env.ts`. In CI, provide these as environment secrets or variables instead of a `.env` file.
+- Shared test data lives in `utils/test-data.ts`. Import constants from there instead of duplicating values across tests.
 - Tests are tagged with `@domain` (e.g. `@auth`) and `@type` (e.g. `@e2e`, `@api`, `@ui`) and scenario (`@happy-path`, `@negative`). Critical end-to-end flows are additionally tagged with `@smoke`.
 
 ## VS Code
