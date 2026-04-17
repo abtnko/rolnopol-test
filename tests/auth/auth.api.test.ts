@@ -1,13 +1,13 @@
 import { expect, test } from "../../utils/fixtures";
-import { env } from "../../utils/env";
 import { apiUrls } from "../../utils/page-urls";
+import { demoUser } from "../../utils/test-data";
 
 test.describe("Authentication API tests", () => {
 	test("Login endpoint returns expected payload for valid credentials", { tag: ["@api", "@auth", "@happy-path"] }, async ({ request, helpers }) => {
 		const response = await request.post(apiUrls.login, {
 			data: {
-				email: env.DEMO_USER_EMAIL,
-				password: env.DEMO_USER_PASSWORD,
+				email: demoUser.email,
+				password: demoUser.password,
 			},
 		});
 
@@ -25,10 +25,12 @@ test.describe("Authentication API tests", () => {
 		helpers.expectIsoDateString(body.data.loginTime);
 		expect(body.data.expiration).toMatchObject({ hours: 24 });
 
+		expect(body.data.user.id).toBe(demoUser.id);
 		expect(typeof body.data.user.id).toBe("number");
-		expect(typeof body.data.user.username).toBe("string");
-		expect(body.data.user.displayedName).toBe(env.DEMO_USER_DISPLAY_NAME);
-		expect(body.data.user.email).toBe(env.DEMO_USER_EMAIL);
+		expect(body.data.user.id).toBeGreaterThan(0);
+		expect(body.data.user.username).toBe(demoUser.username);
+		expect(body.data.user.displayedName).toBe(demoUser.displayedName);
+		expect(body.data.user.email).toBe(demoUser.email);
 		expect(body.data.user.isActive).toBe(true);
 		helpers.expectIsoDateString(body.data.user.createdAt);
 		helpers.expectIsoDateString(body.data.user.updatedAt);
@@ -38,7 +40,7 @@ test.describe("Authentication API tests", () => {
 	test("Login endpoint rejects invalid password", { tag: ["@api", "@auth", "@negative"] }, async ({ request, helpers }) => {
 		const response = await request.post(apiUrls.login, {
 			data: {
-				email: env.DEMO_USER_EMAIL,
+				email: demoUser.email,
 				password: "wrongPassword",
 			},
 		});

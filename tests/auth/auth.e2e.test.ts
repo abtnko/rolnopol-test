@@ -1,6 +1,6 @@
 import { expect, test } from "../../utils/fixtures";
-import { env } from "../../utils/env";
 import { pageUrls } from "../../utils/page-urls";
+import { demoUser } from "../../utils/test-data";
 
 test.describe("Authentication E2E tests", () => {
 	test("User registers a new account and logs in successfully", { tag: ["@e2e", "@smoke", "@auth", "@happy-path"] }, async ({ homePage, registerPage, loginPage, profilePage, page }) => {
@@ -35,7 +35,7 @@ test.describe("Authentication E2E tests", () => {
 
 	test("User logs out successfully", { tag: ["@e2e", "@auth", "@happy-path"] }, async ({ helpers, profilePage, page }) => {
 		// Log in via API and inject session cookies into the browser
-		await helpers.apiLogin(env.DEMO_USER_EMAIL, env.DEMO_USER_PASSWORD);
+		await helpers.apiLogin(demoUser.email, demoUser.password);
 
 		// Navigate directly to profile page
 		await profilePage.goto();
