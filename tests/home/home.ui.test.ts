@@ -2,7 +2,7 @@ import { expect, test } from "../../utils/fixtures";
 import { pageUrls } from "../../utils/page-urls";
 
 test.describe("Home page UI tests", () => {
-	test('"Get Started Free" navigates to the register page', { tag: ["@ui", "@navigation", "@home"] }, async ({ homePage, page, commonMock }) => {
+	test('"Get Started Free" navigates to the register page', { tag: ["@ui", "@happy-path", "@home"] }, async ({ homePage, page, commonMock }) => {
 		await commonMock.getFeatureFlags();
 		await commonMock.getVersion();
 
@@ -12,7 +12,7 @@ test.describe("Home page UI tests", () => {
 		await expect(page).toHaveURL(pageUrls.register);
 	});
 
-	test('"Sign In" navigates to the login page', { tag: ["@ui", "@navigation", "@home"] }, async ({ homePage, page, commonMock }) => {
+	test('"Sign In" navigates to the login page', { tag: ["@ui", "@happy-path", "@home"] }, async ({ homePage, page, commonMock }) => {
 		await commonMock.getFeatureFlags();
 		await commonMock.getVersion();
 
