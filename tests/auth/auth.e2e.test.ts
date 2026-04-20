@@ -11,7 +11,7 @@ test.describe("Authentication E2E tests", () => {
 
 		// Register new account
 		await homePage.goto();
-		await homePage.clickOnRegisterNavLink();
+		await homePage.clickOnRegister();
 		await registerPage.register(email, displayName, password);
 
 		// Registration redirects to login page
@@ -30,7 +30,7 @@ test.describe("Authentication E2E tests", () => {
 		const userDetails = await profilePage.getUserDetails();
 		expect(userDetails.displayName).toBe(displayName);
 		expect(userDetails.email).toBe(email);
-		await expect(page.locator("#statusText")).toHaveText("Active");
+		await expect(page.getByText("Active")).toBeVisible();
 	});
 
 	test("User logs out successfully", { tag: ["@e2e", "@auth", "@happy-path"] }, async ({ helpers, profilePage, page }) => {

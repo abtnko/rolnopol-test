@@ -15,8 +15,11 @@ test.describe("Authentication UI tests", () => {
 		await expect(page).toHaveURL(pageUrls.login);
 		await expect(page.getByRole("heading", { name: "Login to Your User Account" })).toBeVisible();
 
-		const toast = page.locator(".notification.error");
+		const toast = page.getByRole("alert");
 		await expect(toast).toBeVisible();
-		await expect(toast.locator(".notification-message")).toHaveText("Invalid credentials");
+		await expect(toast.getByText("✕")).toBeVisible();
+		await expect(toast.getByText("Error")).toBeVisible();
+		await expect(toast.getByRole("button", { name: "Close notification" })).toBeVisible();
+		await expect(toast.getByText("Invalid credentials")).toBeVisible();
 	});
 });

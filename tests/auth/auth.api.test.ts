@@ -17,12 +17,12 @@ test.describe("Authentication API tests", () => {
 
 		expect(body.success).toBe(true);
 		expect(body.message).toBe("Login successful");
-		helpers.expectIsoDateString(body.timestamp);
+		expect(helpers.isIsoDateString(body.timestamp)).toBe(true);
 		expect(body.data).toBeDefined();
 
 		expect(typeof body.data.token).toBe("string");
 		expect(body.data.token).not.toBe("");
-		helpers.expectIsoDateString(body.data.loginTime);
+		expect(helpers.isIsoDateString(body.data.loginTime)).toBe(true);
 		expect(body.data.expiration).toMatchObject({ hours: 24 });
 
 		expect(body.data.user.id).toBe(demoUser.id);
@@ -32,9 +32,9 @@ test.describe("Authentication API tests", () => {
 		expect(body.data.user.displayedName).toBe(demoUser.displayedName);
 		expect(body.data.user.email).toBe(demoUser.email);
 		expect(body.data.user.isActive).toBe(true);
-		helpers.expectIsoDateString(body.data.user.createdAt);
-		helpers.expectIsoDateString(body.data.user.updatedAt);
-		helpers.expectIsoDateString(body.data.user.lastLogin);
+		expect(helpers.isIsoDateString(body.data.user.createdAt)).toBe(true);
+		expect(helpers.isIsoDateString(body.data.user.updatedAt)).toBe(true);
+		expect(helpers.isIsoDateString(body.data.user.lastLogin)).toBe(true);
 	});
 
 	test("Login endpoint rejects invalid password", { tag: ["@api", "@auth", "@negative"] }, async ({ request, helpers }) => {
@@ -51,6 +51,6 @@ test.describe("Authentication API tests", () => {
 
 		expect(body.success).toBe(false);
 		expect(body.error).toBe("Invalid credentials");
-		helpers.expectIsoDateString(body.timestamp);
+		expect(helpers.isIsoDateString(body.timestamp)).toBe(true);
 	});
 });
