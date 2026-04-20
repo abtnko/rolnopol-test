@@ -1,4 +1,4 @@
-import { expect, type APIRequestContext, type BrowserContext } from "@playwright/test";
+import type { APIRequestContext, BrowserContext } from "@playwright/test";
 import { apiUrls } from "./page-urls";
 import { env } from "./env";
 
@@ -25,8 +25,11 @@ export class Helpers {
     ]);
   }
 
-  async expectIsoDateString(value: unknown) {
-    expect(typeof value).toBe("string");
-    expect(Number.isNaN(Date.parse(value as string))).toBe(false);
+  isIsoDateString(value: unknown): boolean {
+    if (typeof value !== "string") {
+      return false;
+    }
+
+    return Number.isNaN(Date.parse(value)) === false;
   }
 }
