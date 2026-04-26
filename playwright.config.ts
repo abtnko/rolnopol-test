@@ -13,7 +13,7 @@ export default defineConfig({
     : [["html", { open: "never" }]],
   use: {
     baseURL: env.BASE_URL,
-    trace: 'on',
+    trace: 'on-first-retry',
   },
 
   projects: [
