@@ -37,7 +37,7 @@ export const test = base.extend<Fixtures>({
     await use(mock);
     checkUnusedMocks(mock);
   },
-  helpers: async ({ request, context }, use) => { await use(new Helpers(request, context)); },
+  helpers: async ({}, use) => { await use(new Helpers()); },
 });
 
 export { expect } from "@playwright/test";

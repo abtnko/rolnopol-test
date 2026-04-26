@@ -6,7 +6,10 @@ node_modules/
 /blob-report/
 /playwright/.cache/
 /playwright/.auth/
+/utils/auth.json
+/utils/auth.ui.json
 .env
 .env.*
 !.env.example
 .playwright-mcp
+.github/agents/
