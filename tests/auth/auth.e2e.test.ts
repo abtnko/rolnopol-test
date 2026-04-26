@@ -1,6 +1,5 @@
 import { expect, test } from "../../utils/fixtures";
 import { pageUrls } from "../../utils/page-urls";
-import { demoUser } from "../../utils/test-data";
 
 test.describe("Authentication E2E tests", () => {
 	test("User registers a new account and logs in successfully", { tag: ["@e2e", "@smoke", "@auth", "@happy-path"] }, async ({ homePage, registerPage, loginPage, profilePage, page }) => {
@@ -33,25 +32,26 @@ test.describe("Authentication E2E tests", () => {
 		await expect(page.getByText("Active")).toBeVisible();
 	});
 
-	test("User logs out successfully", { tag: ["@e2e", "@auth", "@happy-path"] }, async ({ helpers, profilePage, page }) => {
-		// Log in via API and inject session cookies into the browser
-		await helpers.apiLogin(demoUser.email, demoUser.password);
+	test.describe("Authenticated", () => {
+		test.use({ storageState: "utils/auth.json" });
 
-		// Navigate directly to profile page
-		await profilePage.goto();
-		await expect(page).toHaveURL(pageUrls.profile);
+		test("User logs out successfully", { tag: ["@e2e", "@auth", "@happy-path"] }, async ({ profilePage, page }) => {
+			// Navigate directly to profile page — session is loaded from storageState
+			await profilePage.goto();
+			await expect(page).toHaveURL(pageUrls.profile);
 
-		// Logout and verify redirect to home page
-		await profilePage.logout();
-		await expect(page).toHaveURL(pageUrls.home);
+			// Logout and verify redirect to home page
+			await profilePage.logout();
+			await expect(page).toHaveURL(pageUrls.home);
 
-		// Verify session cookies are cleared
-		const cookies = await page.context().cookies();
-		expect(cookies.find((c) => c.name === "rolnopolToken")).toBeUndefined();
-		expect(cookies.find((c) => c.name === "rolnopolIsLogged")).toBeUndefined();
+			// Verify session cookies are cleared
+			const cookies = await page.context().cookies();
+			expect(cookies.find((c) => c.name === "rolnopolToken")).toBeUndefined();
+			expect(cookies.find((c) => c.name === "rolnopolIsLogged")).toBeUndefined();
 
-		// Verify that accessing profile without a session redirects to login
-		await profilePage.goto();
-		await expect(page).toHaveURL(pageUrls.login);
+			// Verify that accessing profile without a session redirects to login
+			await profilePage.goto();
+			await expect(page).toHaveURL(pageUrls.login);
+		});
 	});
 });

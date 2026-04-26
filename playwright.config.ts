@@ -13,13 +13,18 @@ export default defineConfig({
     : [["html", { open: "never" }]],
   use: {
     baseURL: env.BASE_URL,
-    trace: 'on',
+    trace: 'retain-on-failure',
   },
 
   projects: [
     {
+      name: 'setup',
+      testMatch: /auth\.setup\.ts/,
+    },
+    {
       name: 'chromium',
       use: { ...devices['Desktop Chrome'] },
+      dependencies: ['setup'],
     },
   ],
 });
